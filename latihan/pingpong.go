@@ -39,12 +39,6 @@ a.Hit++
 b.Hit++
 
 */
-
-/*
-   struct untuk korek
-   hits        => untuk proses buka tutup korek api
-   lastPlayer  => player yang sedang memegang korek
-*/
 type Player struct {
 	Name	string
 	Hit		int
@@ -52,9 +46,6 @@ type Player struct {
 
 // break point
 const BreakPoint = 11
-
-// var counter int
-// var userToken map[string]time.Time
 
 func main() {
 	// ball := make(chan int)
@@ -85,18 +76,20 @@ func play(name string, player, done chan *Player) {
 	// lakukan perulangan terus menerus
 	for {
 		select {
-		// akan di eksekusi jika ada data yg dikirim ke channel korek
+		// akan di eksekusi jika ada data yg dikirim ke channel player
 		case p := <-player:
+
 			// mengambil angka random
 			v := randomizer.Intn(max-min) + min
 			time.Sleep(500 * time.Millisecond)
-			// melakukan proses buka tutup korek
+
+			// melakukan proses buka tutup player
 			p.Name = name
 			p.Hit++
 
 			fmt.Println("Player: ", p.Name, ", Hit: ", p.Hit, " got value", v)
 
-            // proses pengiriman korek antar player
+            // proses pengiriman hit antar player
 			if v%BreakPoint == 0 {
                 // jika oke, maka akan mengirim value ke channel `done`
 				done <- p
@@ -121,26 +114,3 @@ func finish(done chan *Player){
 		}
 	}
 }
-
-// 		// userToken["token"] = time.Now()
-// 		// counter++
-
-// 		time.Sleep(1 * time.Second)
-// 		// player 1 hit ball to player 2
-// 		val := <-ball
-// 		log.Println("Player :", name, ", hit 1, got value", val)
-// 		if val%11 == 0 {
-// 			log.Println("Player :", name, "fail in value", val)
-// 			done <- true
-// 			break
-// 		}
-
-// 		// proses / teknik pukulan player
-// 		// val++
-// 		val = rand.Intn(100-1) + 1
-
-// 		log.Println("player", name, "hit the ball to another player with value", val)
-// 		// ball will be delivered to player 2
-// 		ball <- val
-// 	}
-// }
